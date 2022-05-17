@@ -16,7 +16,7 @@ public class EditorCamera extends Entity{
 
     private void updateCameraMatrix(){
         projection.identity();
-        projection.perspective(70, Display.width /Display.height, 0.01f, 100);
+        projection.perspective(70, Display.width/Display.height, 0.01f, 100);
         view.identity();
         Transform transform = getComponent(Transform.class);
         view.rotateX(transform.rotation.x);

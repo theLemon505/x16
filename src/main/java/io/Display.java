@@ -17,14 +17,15 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 
 public class Display {
 
-    public static int width, height;
+    public static int width, height, aspect;
     public String title, version;
     public long window;
     public Scene currentScene = new TestScene();
 
     public Display(int width, int height, String title, String version){
-        this.width = width;
-        this.height = height;
+        Display.width = width;
+        Display.height = height;
+        Display.aspect = width / height;
         this.title = title;
         this.version = version;
 
@@ -33,8 +34,17 @@ public class Display {
 
     public static void WindowResizeCallback(long window, int width, int height)
     {
-        Display.width = width;
-        Display.height = height;
+        int aspectWidth = width;
+        int aspectHeight = (int)((float)aspectWidth / Display.aspect);
+        if (aspectHeight > height){
+            aspectHeight = height;
+            aspectWidth = (int)((float)aspectHeight * Display.aspect);
+        }
+
+        int vpx = (int)(((float)width / 2) - ((float)aspectWidth / 2));
+        int vpy = (int)(((float)height / 2) - ((float)aspectHeight / 2));
+
+        glViewport(vpx, vpy, aspectWidth, aspectHeight);
     }
 
     private void init(){
@@ -91,10 +101,13 @@ public class Display {
     private void loop(){
         GL.createCapabilities();
 
+        glEnable(GL_ALPHA_TEST);
+
+        Display.WindowResizeCallback(window, Display.width, Display.height);
+
         glClearColor(0, 1, 0.5f, 1);
         currentScene.init();
         while(!glfwWindowShouldClose(window)){
-            glViewport(0, 0, Display.width, Display.height);
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

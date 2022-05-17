@@ -35,6 +35,11 @@ public class Shader {
         glUniformMatrix4fv(loc, false, buffer);
     }
 
+    public void uploadTexture(int slot, String name){
+        int loc = glGetUniformLocation(pid, name);
+        glUniform1i(loc, slot);
+    }
+
     private int createShader(String shaderCode, int shaderType){
         int shaderId = glCreateShader(shaderType);
         if (shaderId == 0) {

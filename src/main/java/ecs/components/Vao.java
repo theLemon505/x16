@@ -59,6 +59,23 @@ public class Vao extends Component{
 
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
             }
+            else if(buffer.getKey() == BufferTypes.UV_ARRAY_DATA){
+                int vbo = glGenBuffers();
+
+                ids.put(BufferTypes.UV_ARRAY_DATA, vbo);
+
+                glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+                float[] data = (float[])buffers.get(BufferTypes.UV_ARRAY_DATA).data;
+                FloatBuffer dataBuffer = BufferUtils.createFloatBuffer(data.length);
+                dataBuffer.put(data).flip();
+
+                glBufferData(GL_ARRAY_BUFFER, dataBuffer, GL_STATIC_DRAW);
+
+                glVertexAttribPointer(1, buffers.get(BufferTypes.UV_ARRAY_DATA).step, GL_FLOAT, false, 0, 0);
+
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
+            }
             else if(buffer.getKey() == BufferTypes.INDEX_ARRAY_DATA){
                 int vbo = glGenBuffers();
 
@@ -89,7 +106,7 @@ public class Vao extends Component{
             int buffer = (int)id.getValue();
             glDeleteBuffers(buffer);
         }
-        glBindVertexArray(0);
+        glBindVertexArray(0);;
         glDeleteVertexArrays(id);
     }
 
@@ -101,10 +118,12 @@ public class Vao extends Component{
         shader.uploadMatrix(parent.getComponent(Transform.class).matrix, "transform");
         glBindVertexArray(id);
         glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
     }
 
     public void unload(){
         glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
         glBindVertexArray(0);
         shader.unbind();
     }

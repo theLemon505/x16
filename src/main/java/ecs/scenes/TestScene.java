@@ -2,18 +2,19 @@ package ecs.scenes;
 
 import ecs.entities.EditorCamera;
 import ecs.entities.Entity;
+import ecs.entities.Quad;
 import ecs.entities.Triangle;
 import graphics.Renderer;
 
 public class TestScene extends Scene{
 
-    private Triangle triangle = new Triangle();
+    private Quad quad = new Quad();
     private EditorCamera camera = new EditorCamera("editorCamera");
 
     @Override
     public void init() {
         addEntity(camera);
-        addEntity(triangle);
+        addEntity(quad);
         lowerInit();
     }
 
