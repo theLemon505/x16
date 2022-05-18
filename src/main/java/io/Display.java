@@ -16,7 +16,6 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
 
 public class Display {
-
     public static int width, height, aspect;
     public String title, version;
     public long window;
@@ -102,6 +101,7 @@ public class Display {
         GL.createCapabilities();
 
         glEnable(GL_ALPHA_TEST);
+        glEnable(GL_DEPTH_TEST);
 
         Display.WindowResizeCallback(window, Display.width, Display.height);
 
