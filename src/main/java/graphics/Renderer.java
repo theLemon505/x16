@@ -7,6 +7,8 @@ import ecs.scenes.Scene;
 import enums.BufferTypes;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.GL_UNSIGNED_INT_10_10_10_2;
+import static org.lwjgl.opengl.GL12.GL_UNSIGNED_INT_2_10_10_10_REV;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 
@@ -25,6 +27,7 @@ public class Renderer {
                 }
 
                 int[] vertexSize = (int[]) vao.buffers.get(BufferTypes.INDEX_ARRAY_DATA).data;
+                float[] vertices = (float[]) vao.buffers.get(BufferTypes.VERTEX_ARRAY_DATA).data;
                 glDrawElements(GL_TRIANGLES, vertexSize.length, GL_UNSIGNED_INT, 0);
 
                 if(entity.hasComponent(TextureLayers.class)){

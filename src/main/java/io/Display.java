@@ -99,23 +99,21 @@ public class Display {
 
     private void loop(){
         GL.createCapabilities();
-
-        glEnable(GL_ALPHA_TEST);
         glEnable(GL_DEPTH_TEST);
 
         Display.WindowResizeCallback(window, Display.width, Display.height);
 
         glClearColor(0, 1, 0.5f, 1);
         currentScene.init();
+        System.out.println("OpenGL version " + glGetString(GL_VERSION));
         while(!glfwWindowShouldClose(window)){
-
+            glfwPollEvents();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             currentScene.loop();
             Renderer.renderScene(currentScene);
 
             glfwSwapBuffers(window);
-            glfwPollEvents();
         }
 
         end();

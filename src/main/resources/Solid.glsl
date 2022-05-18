@@ -1,9 +1,9 @@
 #vertex
 
-#version 420
+#version 330 core
 
-in vec3 vertex_position;
-in vec2 vertex_uv;
+layout (location=0) in vec3 vertex_position;
+layout (location=1) in vec2 vertex_uv;
 
 uniform mat4 transform;
 uniform mat4 projection;
@@ -19,7 +19,7 @@ void main() {
 
 #fragment
 
-#version 420
+#version 330 core
 
 in vec2 uv;
 

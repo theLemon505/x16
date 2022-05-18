@@ -22,6 +22,7 @@ public class Cube extends Entity{
 
     @Override
     public void loop() {
+        getComponent(Transform.class).rotation.y += 0.01;
         lowerLoop();
     }
 

@@ -55,7 +55,7 @@ public class Vao extends Component{
 
                 glBufferData(GL_ARRAY_BUFFER, dataBuffer, GL_STATIC_DRAW);
 
-                glVertexAttribPointer(0, buffers.get(BufferTypes.VERTEX_ARRAY_DATA).step, GL_FLOAT, false, 0, 0);
+                glVertexAttribPointer(0, buffers.get(BufferTypes.VERTEX_ARRAY_DATA).step, GL_FLOAT, false, 0,0);
 
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
             }
@@ -111,8 +111,8 @@ public class Vao extends Component{
     }
 
     public void load(){
-        shader.bind();
         EditorCamera camera = (EditorCamera)parent.parentScene.getEntity("editorCamera");
+        shader.bind();
         shader.uploadMatrix(camera.projection, "projection");
         shader.uploadMatrix(camera.view, "view");
         shader.uploadMatrix(parent.getComponent(Transform.class).matrix, "transform");
@@ -122,8 +122,8 @@ public class Vao extends Component{
     }
 
     public void unload(){
-        glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(0);
         glBindVertexArray(0);
         shader.unbind();
     }
