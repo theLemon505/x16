@@ -1,17 +1,16 @@
 package ecs.scenes;
 
-import ecs.entities.*;
-import graphics.Renderer;
+import ecs.entities.EditorCamera;
+import ecs.entities.Sun;
 
-public class TestScene extends Scene{
-
-    private Cube cube = new Cube();
+public class SolarSystem extends Scene{
+    private Sun sun = new Sun();
     private EditorCamera camera = new EditorCamera("editorCamera");
 
     @Override
     public void init() {
         addEntity(camera);
-        addEntity(cube);
+        addEntity(sun);
         lowerInit();
     }
 
