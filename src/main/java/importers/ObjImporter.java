@@ -20,7 +20,7 @@ public class ObjImporter{
         ArrayList<Float> normals = new ArrayList<Float>();
         ArrayList<Float> colors = new ArrayList<Float>();
 
-        String path = "src/main/resources/" + modelpath;
+        String path = "src/main/resources/models/" + modelpath;
 
         loadModelFile(path, positions, indices, texCoords, normals, colors);
 

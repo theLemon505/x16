@@ -14,7 +14,7 @@ public class Texture {
     public int id;
 
     public Texture(String path){
-        this.path = "src/main/resources/" + path;
+        this.path = "src/main/resources/textures/" + path;
         loadTexture();
     }
 

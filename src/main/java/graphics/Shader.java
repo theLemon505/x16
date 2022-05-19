@@ -85,7 +85,7 @@ public class Shader {
 
     public void loadShader(String source){
         StringBuilder result = new StringBuilder();
-        InputStream in = ClassLoader.getSystemResourceAsStream(source);
+        InputStream in = ClassLoader.getSystemResourceAsStream("shaders/" + source);
         try{
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
             String buffer = "";

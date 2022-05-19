@@ -3,7 +3,6 @@ package ecs.entities.ships;
 import ecs.components.TextureLayers;
 import ecs.components.Transform;
 import ecs.components.Vao;
-import ecs.entities.Entity;
 import graphics.Shader;
 import importers.ObjImporter;
 import org.joml.Vector3f;
