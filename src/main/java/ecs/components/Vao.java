@@ -1,6 +1,6 @@
 package ecs.components;
 
-import ecs.entities.EditorCamera;
+import ecs.entities.Camera;
 import enums.BufferTypes;
 import graphics.Shader;
 import graphics.Vbo;
@@ -111,7 +111,7 @@ public class Vao extends Component{
     }
 
     public void load(){
-        EditorCamera camera = (EditorCamera)parent.parentScene.getEntity("editorCamera");
+        Camera camera = (Camera)parent.parentScene.getEntity("playerCamera");
         shader.bind();
         shader.uploadMatrix(camera.projection, "projection");
         shader.uploadMatrix(camera.view, "view");

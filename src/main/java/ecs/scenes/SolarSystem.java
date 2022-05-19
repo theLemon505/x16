@@ -1,15 +1,16 @@
 package ecs.scenes;
 
-import ecs.entities.EditorCamera;
+import ecs.entities.Camera;
+import ecs.entities.Controller;
 import ecs.entities.Sun;
+import ecs.entities.ships.Shuttle;
 
 public class SolarSystem extends Scene{
     private Sun sun = new Sun();
-    private EditorCamera camera = new EditorCamera("editorCamera");
-
+    private Controller playerController = new Controller();
     @Override
     public void init() {
-        addEntity(camera);
+        addEntity(playerController);
         addEntity(sun);
         lowerInit();
     }

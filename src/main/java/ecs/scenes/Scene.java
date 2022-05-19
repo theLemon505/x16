@@ -10,6 +10,7 @@ public abstract class Scene {
 
     public void addEntity(Entity entity){
         entity.parentScene = this;
+        entity.awake();
         entities.add(entity);
     }
 

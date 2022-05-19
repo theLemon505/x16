@@ -58,13 +58,12 @@ public class Display {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
 
-        Input.get();
-
         window = glfwCreateWindow(width, height, title + " -version: " + version, NULL, NULL);
 
-        glfwSetMouseButtonCallback(window, Input::ButtonCallback);
-        glfwSetCursorPosCallback(window, Input::MouseCallback);
-        glfwSetKeyCallback(window, Input::KeyCallback);
+        glfwSetMouseButtonCallback(window, Input::mouseButtonCallback);
+        glfwSetScrollCallback(window, Input::mouseScrollCallback);
+        glfwSetCursorPosCallback(window, Input::mousePosCallback);
+        glfwSetKeyCallback(window, Input::keyCallback);
         glfwSetFramebufferSizeCallback(window, Display::WindowResizeCallback);
 
         if(window == NULL){
@@ -113,6 +112,7 @@ public class Display {
             currentScene.loop();
             Renderer.renderScene(currentScene);
 
+            Input.endFrame();
             glfwSwapBuffers(window);
         }
 

@@ -1,17 +1,18 @@
-package ecs.entities;
+package ecs.entities.ships;
 
 import ecs.components.TextureLayers;
 import ecs.components.Transform;
 import ecs.components.Vao;
+import ecs.entities.Entity;
 import importers.ObjImporter;
 import org.joml.Vector3f;
 
-public class Sun extends Entity{
+public class Shuttle extends Ship {
     private Vao mesh;
     private TextureLayers textures;
 
-    public Sun() {
-        super("sun");
+    public Shuttle(String name) {
+        super(name);
     }
 
     @Override
@@ -21,11 +22,10 @@ public class Sun extends Entity{
 
     @Override
     public void init() {
-        getComponent(Transform.class).scale = new Vector3f(100, 100, 100);
-
-        mesh = ObjImporter.loadData("cube_sphere.obj");
-        textures = new TextureLayers("yellow.png");
-
+        getComponent(Transform.class).rotation.y = 90;
+        getComponent(Transform.class).scale = new Vector3f(1f, 1f, 1f);
+        mesh = ObjImporter.loadData("resonante.obj");
+        textures = new TextureLayers("resonante.png");
         addComponent(mesh);
         addComponent(textures);
 
@@ -34,8 +34,6 @@ public class Sun extends Entity{
 
     @Override
     public void loop() {
-        getComponent(Transform.class).rotation.y += 0.001;
-
         lowerLoop();
     }
 

@@ -64,6 +64,8 @@ public abstract class Entity {
         }
     }
 
+    public abstract void awake();
+
     public abstract void init();
     public void lowerInit(){
         for(Component component:components){

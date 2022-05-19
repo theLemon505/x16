@@ -14,11 +14,6 @@ import java.util.List;
 
 public class ObjImporter{
     public static Vao loadData(String modelpath) {
-        //float[] positions {x, y, z, x, y, z}
-        //float[] texCoords {x, y, x, y}
-        //float[] normals {x, y, z}
-        //float[] colors {r, g, b, a}
-
         ArrayList<Float> positions = new ArrayList<Float>();
         ArrayList<Integer> indices = new ArrayList<Integer>();
         ArrayList<Float> texCoords = new ArrayList<Float>();
@@ -66,7 +61,7 @@ public class ObjImporter{
 
     private static void loadModelFile(String filepath, ArrayList<Float> positions, ArrayList<Integer> indices, ArrayList<Float> texCoords, ArrayList<Float> normals, ArrayList<Float> colors)
     {
-        AIScene scene = Assimp.aiImportFile(filepath, Assimp.aiProcess_Triangulate);
+        AIScene scene = Assimp.aiImportFile(filepath, Assimp.aiProcess_Triangulate | Assimp.aiProcess_FlipUVs);
 
         System.out.println(scene.mMeshes().limit());System.out.println(scene.mNumMeshes());
         PointerBuffer buffer = scene.mMeshes();

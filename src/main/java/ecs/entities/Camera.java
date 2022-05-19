@@ -1,16 +1,11 @@
 package ecs.entities;
 
-import app.Main;
 import ecs.components.Transform;
 import io.Display;
-import io.Input;
 import org.joml.Matrix4f;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-import static org.lwjgl.glfw.GLFW.*;
-
-public class EditorCamera extends Entity{
+public class Camera extends Entity{
     public Matrix4f projection = new Matrix4f();
     public Matrix4f view = new Matrix4f();
     public Vector3f front = new Vector3f(0, 0, 1);
@@ -22,13 +17,18 @@ public class EditorCamera extends Entity{
     public float speed = 0.1f;
 
 
-    public EditorCamera(String name){
+    public Camera(String name){
         super(name);
+    }
+
+    @Override
+    public void awake() {
+
     }
 
     private void updateCameraMatrix(){
         projection.identity();
-        projection.perspective(70, Display.width/Display.height, 0.01f, 100);
+        projection.perspective(70, Display.width/Display.height, 0.01f, 10000);
         view.identity();
         Transform transform = getComponent(Transform.class);
         view.rotateX(transform.rotation.x);
@@ -39,7 +39,6 @@ public class EditorCamera extends Entity{
 
     @Override
     public void init() {
-        getComponent(Transform.class).position.z = -5;
         updateCameraMatrix();
         lowerInit();
     }
