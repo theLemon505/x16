@@ -16,7 +16,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
 
 public class Display {
-    public static int width, height, aspect;
+    public static int width, height, aspect, aspectWidth, aspectHeight;
     public String title, version;
     public long window;
     public Scene currentScene = new SolarSystem();
@@ -31,19 +31,23 @@ public class Display {
         init();
     }
 
-    public static void WindowResizeCallback(long window, int width, int height)
+    public static void WindowResizeCallback(long window, int screenWidth, int screenHeight)
     {
-        int aspectWidth = width;
+        Display.width = screenWidth;
+        Display.height = screenHeight;
+
+        // Figure out the largest area that fits this target aspect ratio
+        int aspectWidth = screenWidth;
         int aspectHeight = (int)((float)aspectWidth / Display.aspect);
-        if (aspectHeight > height){
-            aspectHeight = height;
-            aspectWidth = (int)((float)aspectHeight * Display.aspect);
-        }
 
-        int vpx = (int)(((float)width / 2) - ((float)aspectWidth / 2));
-        int vpy = (int)(((float)height / 2) - ((float)aspectHeight / 2));
+        // Center rectangle
+        int vpX = (int)(((float)screenWidth / 2f) - ((float)aspectWidth / 2f));
+        int vpY = (int)(((float)screenHeight / 2f) - ((float)aspectHeight / 2f));
 
-        glViewport(vpx, vpy, aspectWidth, aspectHeight);
+        Display.aspectWidth = aspectWidth;
+        Display.aspectHeight = aspectHeight;
+
+        glViewport(vpX, vpY, aspectWidth, aspectHeight);
     }
 
     private void init(){
@@ -99,6 +103,7 @@ public class Display {
     private void loop(){
         GL.createCapabilities();
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
 
         Display.WindowResizeCallback(window, Display.width, Display.height);
 

@@ -4,6 +4,7 @@ import ecs.components.TextureLayers;
 import ecs.components.Transform;
 import ecs.components.Vao;
 import ecs.entities.Entity;
+import graphics.Shader;
 import importers.ObjImporter;
 import org.joml.Vector3f;
 
@@ -22,10 +23,12 @@ public class Shuttle extends Ship {
 
     @Override
     public void init() {
-        getComponent(Transform.class).rotation.y = 90;
+        getComponent(Transform.class).rotation.y = 75;
+        getComponent(Transform.class).position.x = 200;
         getComponent(Transform.class).scale = new Vector3f(1f, 1f, 1f);
         mesh = ObjImporter.loadData("resonante.obj");
         textures = new TextureLayers("resonante.png");
+        mesh.shader = new Shader("Lit.glsl");
         addComponent(mesh);
         addComponent(textures);
 

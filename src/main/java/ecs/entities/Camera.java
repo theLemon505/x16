@@ -28,13 +28,9 @@ public class Camera extends Entity{
 
     private void updateCameraMatrix(){
         projection.identity();
-        projection.perspective(70, Display.width/Display.height, 0.01f, 10000);
+        projection.perspective(70, Display.aspectWidth / Display.aspectHeight, 0.01f, 10000);
         view.identity();
         Transform transform = getComponent(Transform.class);
-        view.rotateX(transform.rotation.x);
-        view.rotateY(transform.rotation.y);
-        view.rotateZ(transform.rotation.z);
-        view.translate(transform.position);
     }
 
     @Override

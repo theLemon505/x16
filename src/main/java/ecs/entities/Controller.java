@@ -47,10 +47,15 @@ public class Controller extends Entity{
 
     private void setCameraPosition(float dh, float dv){
         float offsetX = dh * (float)Math.sin(Math.toRadians(angle));
-        float offsetZ = (dh * (float)Math.cos(Math.toRadians(angle)));
+        float offsetZ = dh * (float)Math.cos(Math.toRadians(angle));
+
+        float offsetY = (dv * (float)Math.sin(Math.toRadians(0))) + (dv * (float)Math.cos(Math.toRadians(0)));
+
         camera.getComponent(Transform.class).position.x = playerShip.getComponent(Transform.class).position.x - offsetX;
         camera.getComponent(Transform.class).position.z = playerShip.getComponent(Transform.class).position.z - offsetZ;
-        camera.getComponent(Transform.class).rotation.y = -angle * 0.0175f;
+        camera.getComponent(Transform.class).position.y = playerShip.getComponent(Transform.class).position.y - offsetY;
+
+        camera.view.lookAt(camera.getComponent(Transform.class).position, playerShip.getComponent(Transform.class).position, new Vector3f(0,1,0));
     }
 
     private float getHorizontalDistance(){
@@ -63,18 +68,18 @@ public class Controller extends Entity{
 
     private void zoom(){
         zoom = Input.getScrollY();
-        distanceFromShip -= zoom;
+        distanceFromShip -= zoom * 10;
     }
 
     private void pitch(){
         if(Input.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)){
-            pitch += Input.getDy() * 0.1f;
+            pitch += Input.getDy() * 0.5f;
         }
     }
 
     private void angle(){
         if(Input.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)){
-            angle += Input.getDx() * 0.1f;
+            angle += Input.getDx() * 0.5f;
         }
     }
 

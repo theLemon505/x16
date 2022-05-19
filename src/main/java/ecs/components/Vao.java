@@ -36,7 +36,7 @@ public class Vao extends Component{
     @Override
     public void init() {
         if(shader == null){
-            shader = new Shader("Solid.glsl");
+            shader = new Shader("Unlit.glsl");
         }
         id = glGenVertexArrays();
         glBindVertexArray(id);
@@ -56,6 +56,23 @@ public class Vao extends Component{
                 glBufferData(GL_ARRAY_BUFFER, dataBuffer, GL_STATIC_DRAW);
 
                 glVertexAttribPointer(0, buffers.get(BufferTypes.VERTEX_ARRAY_DATA).step, GL_FLOAT, false, 0,0);
+
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
+            }
+            else if(buffer.getKey() == BufferTypes.NORMAL_ARRAY_DATA){
+                int vbo = glGenBuffers();
+
+                ids.put(BufferTypes.NORMAL_ARRAY_DATA, vbo);
+
+                glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+                float[] data = (float[])buffers.get(BufferTypes.NORMAL_ARRAY_DATA).data;
+                FloatBuffer dataBuffer = BufferUtils.createFloatBuffer(data.length);
+                dataBuffer.put(data).flip();
+
+                glBufferData(GL_ARRAY_BUFFER, dataBuffer, GL_STATIC_DRAW);
+
+                glVertexAttribPointer(2, buffers.get(BufferTypes.NORMAL_ARRAY_DATA).step, GL_FLOAT, false, 0,0);
 
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
             }
@@ -112,16 +129,20 @@ public class Vao extends Component{
 
     public void load(){
         Camera camera = (Camera)parent.parentScene.getEntity("playerCamera");
+        Transform sun = parent.parentScene.getEntity("sun").getComponent(Transform.class);
         shader.bind();
+        shader.uploadVector3f(sun.position, "sun");
         shader.uploadMatrix(camera.projection, "projection");
         shader.uploadMatrix(camera.view, "view");
         shader.uploadMatrix(parent.getComponent(Transform.class).matrix, "transform");
         glBindVertexArray(id);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
     }
 
     public void unload(){
+        glEnableVertexAttribArray(2);
         glDisableVertexAttribArray(1);
         glDisableVertexAttribArray(0);
         glBindVertexArray(0);

@@ -1,6 +1,7 @@
 package graphics;
 
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
 import javax.annotation.processing.SupportedSourceVersion;
@@ -33,6 +34,11 @@ public class Shader {
         FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
         matrix.get(buffer);
         glUniformMatrix4fv(loc, false, buffer);
+    }
+
+    public void uploadVector3f(Vector3f vector, String name){
+        int loc = glGetUniformLocation(pid, name);
+        glUniform3f(loc, vector.x, vector.y, vector.z);
     }
 
     public void uploadTexture(int slot, String name){

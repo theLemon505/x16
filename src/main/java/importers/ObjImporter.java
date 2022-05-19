@@ -27,16 +27,20 @@ public class ObjImporter{
         float[] vertices = toFloatArray(positions);
         int[] inds = toIntArray(indices);
         float[] uvs = toFloatArray(texCoords);
+        float[] norms = toFloatArray(normals);
 
         Vbo vertexBuffer = new Vbo(vertices, 3);
         Vbo indexBuffer = new Vbo(inds, 1);
         Vbo uvBuffer = new Vbo(uvs, 2);
+        Vbo normalBuffer = new Vbo(norms, 3);
+
 
         Vao array = new Vao();
 
         array.uploadBuffer(vertexBuffer, BufferTypes.VERTEX_ARRAY_DATA);
         array.uploadBuffer(indexBuffer, BufferTypes.INDEX_ARRAY_DATA);
         array.uploadBuffer(uvBuffer, BufferTypes.UV_ARRAY_DATA);
+        array.uploadBuffer(normalBuffer, BufferTypes.NORMAL_ARRAY_DATA);
 
         return array;
     }
