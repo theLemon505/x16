@@ -9,8 +9,12 @@ public class TextureLayers extends Component{
     public Texture albedoTexture;
     public SkyboxTexture skyboxTexture;
     public boolean skybox = false;
+    public float specular = 0;
+    public float damp = 0;
 
-    public TextureLayers(String albedoPath){
+    public TextureLayers(String albedoPath, float specular, float damp){
+        this.specular = specular;
+        this.damp = damp;
         this.albedoTexture = new Texture(albedoPath);
     }
 

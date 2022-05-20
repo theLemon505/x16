@@ -17,7 +17,7 @@ public class TestMap extends Entity{
     public void awake() {
         mesh = ObjImporter.loadData("test_map.obj");
         mesh.shader = new Shader("Lit.glsl");
-        textures = new TextureLayers("testTexture.png");
+        textures = new TextureLayers("yellow.png", 0, 0);
     }
 
     @Override

@@ -14,6 +14,7 @@ public class Controller extends Entity{
     private float angle = 0;
     private float zoom = 1;
     private float pitch = 0;
+    private float speed = Prefrences.editorCameraSpeed;
 
     public Controller() {
         super("playerController");
@@ -33,6 +34,11 @@ public class Controller extends Entity{
 
     @Override
     public void loop() {
+        if(Input.isKeyPressed(GLFW_KEY_LEFT_SHIFT)){
+            speed = Prefrences.editorCameraSpeed * 2;
+        }else{
+            speed = Prefrences.editorCameraSpeed;
+        }
         zoom();
         pitch();
         angle();
@@ -45,18 +51,13 @@ public class Controller extends Entity{
     }
 
     private void setCameraRotation(float dh, float dv){
-        float offsetX = dh * (float)Math.sin(Math.toRadians(angle));
-        float offsetZ = dh * (float)Math.cos(Math.toRadians(angle));
-
-        float offsetY = (dv * (float)Math.sin(Math.toRadians(0))) + (dv * (float)Math.cos(Math.toRadians(0)));
-
         camera.getComponent(Transform.class).rotation.x = pitch * 0.005f;
         camera.getComponent(Transform.class).rotation.y = angle * 0.005f;
     }
 
     private void setCameraPosition(){
-        float x = getSin() * Prefrences.editorCameraSpeed;
-        float z = getCos() * Prefrences.editorCameraSpeed;
+        float x = getSin() * speed;
+        float z = getCos() * speed;
 
         Vector3f position = camera.getComponent(Transform.class).position;
         if(Input.isKeyPressed(GLFW_KEY_W)){
@@ -72,10 +73,10 @@ public class Controller extends Entity{
             position.add(new Vector3f(-z, 0, x));
         }
         if(Input.isKeyPressed(GLFW_KEY_E)){
-            position.add(new Vector3f(0, -Prefrences.editorCameraSpeed, 0));
+            position.add(new Vector3f(0, -speed, 0));
         }
         if(Input.isKeyPressed(GLFW_KEY_Q)){
-            position.add(new Vector3f(0, Prefrences.editorCameraSpeed, 0));
+            position.add(new Vector3f(0, speed, 0));
         }
     }
 

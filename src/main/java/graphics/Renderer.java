@@ -6,6 +6,8 @@ import ecs.entities.Camera;
 import ecs.entities.Entity;
 import ecs.scenes.Scene;
 import enums.BufferTypes;
+import enums.RenderTypes;
+import gui.layers.Window;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
@@ -18,7 +20,7 @@ public class Renderer {
 
                 if(entity.hasComponent(TextureLayers.class)){
                     if(entity.getComponent(TextureLayers.class).skyboxTexture != null){
-                        vao.load(true);
+                        vao.load(RenderTypes.SKYBOX);
                         glDisable(GL_CULL_FACE);
                         glDepthFunc(GL_LEQUAL);
                         SkyboxTexture tex = entity.getComponent(TextureLayers.class).skyboxTexture;
@@ -27,15 +29,18 @@ public class Renderer {
                         tex.load();
                     }
                     else{
-                        vao.load(false);
+                        vao.load(RenderTypes.OBJECT);
                         Texture tex = entity.getComponent(TextureLayers.class).albedoTexture;
                         vao.shader.uploadTexture(0, "texture_sampler");
                         glActiveTexture(GL_TEXTURE0);
                         tex.load();
                     }
                 }
+                else if(entity.name == "test"){
+                    vao.load(RenderTypes.GUI);
+                }
                 else{
-                    vao.load(false);
+                    vao.load(RenderTypes.OBJECT);
                 }
 
 

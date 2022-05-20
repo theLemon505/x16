@@ -25,6 +25,8 @@ void main() {
 in vec2 uv;
 
 uniform sampler2D texture_sampler;
+uniform float specular;
+uniform float damp;
 
 out vec4 out_color;
 
