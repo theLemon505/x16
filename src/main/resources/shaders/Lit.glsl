@@ -41,5 +41,5 @@ void main() {
     float n_dot_1 = dot(unit_normal, to_light / 100);
     float brightness = max(n_dot_1, 0.2);
 
-    out_color = brightness * texture(texture_sampler, uv) * vec4(1, 1, 0.9, 1) + vec4(0.02, 0.02, 0.02, 1);
+    out_color = brightness * texture(texture_sampler, uv) + vec4(0.02, 0.02, 0.02, 1);
 }

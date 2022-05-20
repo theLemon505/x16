@@ -28,7 +28,7 @@ public class Camera extends Entity{
 
     private void updateCameraMatrix(){
         projection.identity();
-        projection.perspective(70, Display.aspectWidth / Display.aspectHeight, 0.01f, 10000);
+        projection.perspective(45, Display.aspectWidth / Display.aspectHeight, 0.01f, 500);
         view.identity();
         view.rotateX(getComponent(Transform.class).rotation.x);
         view.rotateY(getComponent(Transform.class).rotation.y);

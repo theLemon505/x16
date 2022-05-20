@@ -4,6 +4,7 @@ import ecs.entities.Camera;
 import enums.BufferTypes;
 import graphics.Shader;
 import graphics.Vbo;
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -127,13 +128,20 @@ public class Vao extends Component{
         glDeleteVertexArrays(id);
     }
 
-    public void load(){
+    public void load(boolean skybox){
         Camera camera = (Camera)parent.parentScene.getEntity("playerCamera");
-        Transform sun = parent.parentScene.getEntity("sun").getComponent(Transform.class);
         shader.bind();
-        shader.uploadVector3f(sun.position, "sun");
+        shader.uploadVector3f(new Vector3f(100, 100, 100), "sun");
         shader.uploadMatrix(camera.projection, "projection");
-        shader.uploadMatrix(camera.view, "view");
+        if(skybox){
+            camera.view.m30(0);
+            camera.view.m31(0);
+            camera.view.m32(0);
+            shader.uploadMatrix(camera.view, "view");
+        }
+        else{
+            shader.uploadMatrix(camera.view, "view");
+        }
         shader.uploadMatrix(parent.getComponent(Transform.class).matrix, "transform");
         glBindVertexArray(id);
         glEnableVertexAttribArray(0);

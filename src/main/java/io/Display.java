@@ -1,6 +1,7 @@
 package io;
 
 import ecs.scenes.Scene;
+import ecs.scenes.TestScene;
 import graphics.Renderer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -18,7 +19,7 @@ public class Display {
     public static int width, height, aspect, aspectWidth, aspectHeight;
     public String title, version;
     public long window;
-    public Scene currentScene = null;
+    public Scene currentScene = new TestScene();
 
     public Display(int width, int height, String title, String version){
         Display.width = width;
@@ -106,7 +107,7 @@ public class Display {
 
         Display.WindowResizeCallback(window, Display.width, Display.height);
 
-        glClearColor(0, 0, 0, 1);
+        glClearColor(0.2f,0.9f, 1f, 1);
         currentScene.init();
         System.out.println("OpenGL version " + glGetString(GL_VERSION));
         while(!glfwWindowShouldClose(window)){
