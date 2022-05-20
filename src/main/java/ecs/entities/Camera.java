@@ -30,7 +30,10 @@ public class Camera extends Entity{
         projection.identity();
         projection.perspective(70, Display.aspectWidth / Display.aspectHeight, 0.01f, 10000);
         view.identity();
-        Transform transform = getComponent(Transform.class);
+        view.rotateX(getComponent(Transform.class).rotation.x);
+        view.rotateY(getComponent(Transform.class).rotation.y);
+        view.rotateZ(getComponent(Transform.class).rotation.z);
+        view.translate(getComponent(Transform.class).position);
     }
 
     @Override

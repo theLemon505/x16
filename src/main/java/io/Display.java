@@ -1,7 +1,6 @@
 package io;
 
 import ecs.scenes.Scene;
-import ecs.scenes.SolarSystem;
 import graphics.Renderer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -19,7 +18,7 @@ public class Display {
     public static int width, height, aspect, aspectWidth, aspectHeight;
     public String title, version;
     public long window;
-    public Scene currentScene = new SolarSystem();
+    public Scene currentScene = null;
 
     public Display(int width, int height, String title, String version){
         Display.width = width;

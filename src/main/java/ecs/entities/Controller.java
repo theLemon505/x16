@@ -1,18 +1,15 @@
 package ecs.entities;
 
 import ecs.components.Transform;
-import ecs.entities.ships.Ship;
-import ecs.entities.ships.Shuttle;
 import io.Input;
 import org.joml.Vector3f;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 public class Controller extends Entity{
-    public Ship playerShip = new Shuttle("resonante");
     public Camera camera = new Camera("playerCamera");
 
-    private float distanceFromShip = 50;
+    private float distanceFromShip = 1000;
     private float angle = 0;
     private float zoom = 1;
     private float pitch = 0;
@@ -23,7 +20,6 @@ public class Controller extends Entity{
 
     @Override
     public void awake() {
-        parentScene.addEntity(playerShip);
         parentScene.addEntity(camera);
     }
 
@@ -51,11 +47,9 @@ public class Controller extends Entity{
 
         float offsetY = (dv * (float)Math.sin(Math.toRadians(0))) + (dv * (float)Math.cos(Math.toRadians(0)));
 
-        camera.getComponent(Transform.class).position.x = playerShip.getComponent(Transform.class).position.x - offsetX;
-        camera.getComponent(Transform.class).position.z = playerShip.getComponent(Transform.class).position.z - offsetZ;
-        camera.getComponent(Transform.class).position.y = playerShip.getComponent(Transform.class).position.y - offsetY;
-
-        camera.view.lookAt(camera.getComponent(Transform.class).position, playerShip.getComponent(Transform.class).position, new Vector3f(0,1,0));
+        camera.getComponent(Transform.class).rotation.x = pitch * 0.005f;
+        camera.getComponent(Transform.class).rotation.z = pitch * 0.005f;
+        camera.getComponent(Transform.class).rotation.y = angle * 0.005f;
     }
 
     private float getHorizontalDistance(){
