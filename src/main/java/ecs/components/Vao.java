@@ -2,10 +2,8 @@ package ecs.components;
 
 import ecs.entities.Camera;
 import enums.BufferTypes;
-import enums.RenderTypes;
 import graphics.Shader;
 import graphics.Vbo;
-import gui.layers.Window;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
@@ -130,28 +128,19 @@ public class Vao extends Component{
         glDeleteVertexArrays(id);
     }
 
-    public void load(RenderTypes type){
+    public void load(boolean skybox){
         Camera camera = (Camera)parent.parentScene.getEntity("playerCamera");
         shader.bind();
         shader.uploadVector3f(new Vector3f(100, 100, 100), "sun");
         shader.uploadMatrix(camera.projection, "projection");
-        if(type == RenderTypes.SKYBOX){
+        if(skybox){
             camera.view.m30(0);
             camera.view.m31(0);
             camera.view.m32(0);
             shader.uploadMatrix(camera.view, "view");
         }
-        else if(type == RenderTypes.GUI){
-            Window window = (Window)parent;
-            shader.uploadVector3f(window.color, "element_color");
-        }
-        else if(type == RenderTypes.OBJECT){
+        else{
             shader.uploadMatrix(camera.view, "view");
-            if(parent.getComponent(TextureLayers.class).damp < 1){
-                parent.getComponent(TextureLayers.class).damp = 1;
-            }
-            shader.uploadFloat(parent.getComponent(TextureLayers.class).damp, "damp");
-            shader.uploadFloat(parent.getComponent(TextureLayers.class).specular, "specular");
         }
         shader.uploadMatrix(parent.getComponent(Transform.class).matrix, "transform");
         glBindVertexArray(id);

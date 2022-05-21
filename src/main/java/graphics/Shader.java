@@ -46,16 +46,6 @@ public class Shader {
         glUniform1i(loc, slot);
     }
 
-    public void uploadInt(int value, String name){
-        int loc = glGetUniformLocation(pid, name);
-        glUniform1i(loc, value);
-    }
-
-    public void uploadFloat(float value, String name){
-        int loc = glGetUniformLocation(pid, name);
-        glUniform1f(loc, value);
-    }
-
     private int createShader(String shaderCode, int shaderType){
         int shaderId = glCreateShader(shaderType);
         if (shaderId == 0) {

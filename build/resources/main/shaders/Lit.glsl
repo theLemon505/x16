@@ -14,7 +14,6 @@ uniform vec3 sun;
 out vec2 uv;
 out vec3 normal;
 out vec3 to_light;
-out vec3 to_camera;
 
 void main() {
     uv = vertex_uv;
@@ -22,7 +21,6 @@ void main() {
     vec4 world_position = transform * vec4(vertex_position, 1);
     gl_Position = projection * view * world_position;
     to_light = sun - world_position.xyz;
-    to_camera = (inverse(view) * vec4(0,0,0,1)).xyz - world_position.xyz;
 }
 
 #fragment
@@ -32,11 +30,8 @@ void main() {
 in vec2 uv;
 in vec3 normal;
 in vec3 to_light;
-in vec3 to_camera;
 
 uniform sampler2D texture_sampler;
-uniform float specular;
-uniform float damp;
 
 out vec4 out_color;
 
@@ -44,16 +39,7 @@ void main() {
     vec3 unit_normal = normalize(normal);
 
     float n_dot_1 = dot(unit_normal, to_light / 100);
-    float brightness = max(n_dot_1, 0.3);
+    float brightness = max(n_dot_1, 0.2);
 
-    vec3 unit_to_camera = normalize(to_camera);
-    vec3 light_direction = -to_light / 750;
-    vec3 reflected_light = reflect(light_direction, unit_normal);
-
-    float specular_factor = dot(reflected_light, unit_to_camera);
-    specular_factor = max(specular_factor, 0.0);
-    float damped_factor = pow(specular_factor, damp);
-    vec3 final_specular = damped_factor * specular * vec3(1,1,1);
-
-    out_color = brightness * texture(texture_sampler, uv) + vec4(final_specular, 1);
+    out_color = brightness * texture(texture_sampler, uv) + vec4(0.02, 0.02, 0.02, 1);
 }
