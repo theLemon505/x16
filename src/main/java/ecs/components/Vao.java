@@ -4,6 +4,7 @@ import ecs.entities.Camera;
 import enums.BufferTypes;
 import graphics.Shader;
 import graphics.Vbo;
+import graphics.settings.EnviornmentSetting;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
@@ -21,10 +22,6 @@ public class Vao extends Component{
     public int id;
     public HashMap<BufferTypes, Vbo> buffers = new HashMap<BufferTypes, Vbo>();
     public HashMap<BufferTypes, Integer> ids = new HashMap<BufferTypes, Integer>();
-
-    public void uploadShader(Shader shader){
-        this.shader = shader;
-    }
 
     public void uploadBuffer(Vbo buffer, BufferTypes name){
         buffers.put(name, buffer);
@@ -131,7 +128,7 @@ public class Vao extends Component{
     public void load(boolean skybox){
         Camera camera = (Camera)parent.parentScene.getEntity("playerCamera");
         shader.bind();
-        shader.uploadVector3f(new Vector3f(100, 100, 100), "sun");
+        shader.uploadVector3f(EnviornmentSetting.lightPosition, "sun");
         shader.uploadMatrix(camera.projection, "projection");
         if(skybox){
             camera.view.m30(0);
@@ -150,7 +147,7 @@ public class Vao extends Component{
     }
 
     public void unload(){
-        glEnableVertexAttribArray(2);
+        glDisableVertexAttribArray(2);
         glDisableVertexAttribArray(1);
         glDisableVertexAttribArray(0);
         glBindVertexArray(0);

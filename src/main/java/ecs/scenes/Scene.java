@@ -1,6 +1,7 @@
 package ecs.scenes;
 
 import ecs.entities.Entity;
+import ecs.entities.Renderer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,7 +2,6 @@ package io;
 
 import ecs.scenes.Scene;
 import ecs.scenes.TestScene;
-import graphics.Renderer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -103,19 +102,17 @@ public class Display {
     private void loop(){
         GL.createCapabilities();
         glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_ALWAYS);
         glEnable(GL_CULL_FACE);
 
         Display.WindowResizeCallback(window, Display.width, Display.height);
 
-        glClearColor(0.2f,0.9f, 1f, 1);
         currentScene.init();
         System.out.println("OpenGL version " + glGetString(GL_VERSION));
         while(!glfwWindowShouldClose(window)){
             glfwPollEvents();
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             currentScene.loop();
-            Renderer.renderScene(currentScene);
 
             Input.endFrame();
             glfwSwapBuffers(window);
