@@ -17,20 +17,20 @@ import static org.lwjgl.opengles.GLES20.GL_UNSIGNED_BYTE;
 import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
-public class SkyboxTexture extends Texture{
+public class SkyboxTexture {
+    private String[] path;
+    public int id;
 
     public SkyboxTexture(String[] paths){
-        super(paths);
         String[] p = new String[6];
         for(int i = 0; i < paths.length; i++){
             p[i] = "src/main/resources/textures/" + paths[i];
         }
-        this.paths = p;
+        this.path = p;
         loadTexture();
     }
 
-    @Override
-    public void loadTexture(){
+    private void loadTexture(){
         id = GL20.glGenTextures();
         GL20.glBindTexture(GL_TEXTURE_CUBE_MAP, id);
 
@@ -40,11 +40,11 @@ public class SkyboxTexture extends Texture{
         GL20.glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 
-        for(int i = 0; i < paths.length; i++){
+        for(int i = 0; i < path.length; i++){
             IntBuffer width = BufferUtils.createIntBuffer(1);
             IntBuffer height = BufferUtils.createIntBuffer(1);
             IntBuffer channels = BufferUtils.createIntBuffer(1);
-            ByteBuffer image = stbi_load(paths[i], width, height, channels, 0);
+            ByteBuffer image = stbi_load(path[i], width, height, channels, 0);
             if(image != null){
                 GL20.glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, GL_RGB, width.get(0), height.get(0), 0, GL_RGB, GL_UNSIGNED_BYTE, image);
             }
@@ -56,12 +56,10 @@ public class SkyboxTexture extends Texture{
         }
     }
 
-    @Override
     public void load(){
         GL20.glBindTexture(GL_TEXTURE_CUBE_MAP, id);
     }
 
-    @Override
     public void unload(){
         GL20.glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
     }
