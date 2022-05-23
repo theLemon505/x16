@@ -1,6 +1,6 @@
 package io;
 
-import ecs.entities.EditorCamera;
+import ecs.entities.Controller;
 import ecs.scenes.Scene;
 import ecs.scenes.TestScene;
 import gui.EditorGui;

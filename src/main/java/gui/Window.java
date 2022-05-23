@@ -18,7 +18,7 @@ import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL30.GL_COLOR_ATTACHMENT0;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
-public class Window {
+public abstract class Window {
     public String title;
     public float width, height;
     public Vector2f position = new Vector2f();
@@ -127,7 +127,7 @@ public class Window {
         glEnableVertexAttribArray(1);
 
         texture.uploadMatrix(matrix, "transform");
-        texture.uploadTexture(GL_TEXTURE2, "texture_sampler");
+        texture.uploadTexture(2, "texture_sampler");
         glActiveTexture(GL_TEXTURE2);
         Renderer.framebuffer.getRenderTarget(GL_COLOR_ATTACHMENT0).load();
 

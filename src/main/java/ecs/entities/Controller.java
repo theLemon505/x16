@@ -7,7 +7,7 @@ import org.joml.Vector3f;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class EditorCamera extends Entity{
+public class Controller extends Entity{
     public Camera camera = new Camera("playerCamera");
 
     private float distanceFromShip = 10;
@@ -15,7 +15,7 @@ public class EditorCamera extends Entity{
     private float zoom = 1;
     private float pitch = 0;
 
-    public EditorCamera() {
+    public Controller() {
         super("playerController");
     }
 

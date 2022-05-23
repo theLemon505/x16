@@ -1,12 +1,16 @@
 package ecs.scenes;
 
-import ecs.entities.EditorCamera;
+import ecs.components.Vao;
+import ecs.entities.Controller;
 import ecs.entities.Renderer;
 import ecs.entities.Skybox;
 import ecs.entities.TestMap;
+import graphics.Shader;
+import graphics.SkyboxTexture;
+import importers.ObjImporter;
 
 public class TestScene extends Scene{
-    private EditorCamera editorCamera;
+    private Controller editorCamera;
     private Skybox skybox;
     private TestMap map;
     public Renderer currentRenderer;
@@ -14,7 +18,7 @@ public class TestScene extends Scene{
     public void init() {
         currentRenderer = new Renderer();
         map = new TestMap();
-        editorCamera = new EditorCamera();
+        editorCamera = new Controller();
         skybox = new Skybox();
         addEntity(currentRenderer);
         addEntity(map);

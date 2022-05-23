@@ -32,7 +32,6 @@ public class Renderer extends Entity{
                 entity.getComponent(Vao.class).draw();
             }
         }
-
         framebuffer.endRenderCapture();
 
         display();
