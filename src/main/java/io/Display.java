@@ -2,7 +2,6 @@ package io;
 
 import ecs.scenes.Scene;
 import ecs.scenes.TestScene;
-import graphics.Renderer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -13,6 +12,7 @@ import java.nio.IntBuffer;
 import static java.sql.Types.NULL;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.GL_MULTISAMPLE;
 import static org.lwjgl.system.MemoryStack.stackPush;
 
 public class Display {
@@ -61,6 +61,7 @@ public class Display {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
+        glfwWindowHint(GLFW_SAMPLES, 4);
 
         window = glfwCreateWindow(width, height, title + " -version: " + version, NULL, NULL);
 
@@ -104,18 +105,16 @@ public class Display {
         GL.createCapabilities();
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
+        glEnable(GL_MULTISAMPLE);
 
         Display.WindowResizeCallback(window, Display.width, Display.height);
 
-        glClearColor(0.2f,0.9f, 1f, 1);
         currentScene.init();
         System.out.println("OpenGL version " + glGetString(GL_VERSION));
         while(!glfwWindowShouldClose(window)){
             glfwPollEvents();
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             currentScene.loop();
-            Renderer.renderScene(currentScene);
 
             Input.endFrame();
             glfwSwapBuffers(window);

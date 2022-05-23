@@ -3,6 +3,8 @@ package ecs.components;
 import ecs.entities.Camera;
 import enums.BufferTypes;
 import graphics.Shader;
+import graphics.SkyboxTexture;
+import graphics.Texture;
 import graphics.Vbo;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
@@ -126,6 +128,48 @@ public class Vao extends Component{
         }
         glBindVertexArray(0);;
         glDeleteVertexArrays(id);
+    }
+
+    public void draw(){
+        if(parent.hasComponent(TextureLayers.class)){
+            if(parent.getComponent(TextureLayers.class).skyboxTexture != null){
+                load(true);
+                glDisable(GL_CULL_FACE);
+                glDepthFunc(GL_LEQUAL);
+                SkyboxTexture tex = parent.getComponent(TextureLayers.class).skyboxTexture;
+                shader.uploadTexture(1, "texture_sampler");
+                glActiveTexture(GL_TEXTURE1);
+                tex.load();
+            }
+            else{
+                load(false);
+                Texture tex = parent.getComponent(TextureLayers.class).albedoTexture;
+                shader.uploadTexture(0, "texture_sampler");
+                glActiveTexture(GL_TEXTURE0);
+                tex.load();
+            }
+        }
+        else{
+            load(false);
+        }
+
+
+        int[] vertexSize = (int[]) buffers.get(BufferTypes.INDEX_ARRAY_DATA).data;
+        glDrawElements(GL_TRIANGLES, vertexSize.length, GL_UNSIGNED_INT, 0);
+
+
+        if(parent.hasComponent(TextureLayers.class)){
+            if(parent.getComponent(TextureLayers.class).skyboxTexture != null){
+                glEnable(GL_CULL_FACE);
+                SkyboxTexture tex = parent.getComponent(TextureLayers.class).skyboxTexture;
+                tex.unload();
+            }
+            else{
+                Texture tex = parent.getComponent(TextureLayers.class).albedoTexture;
+                tex.unload();
+            }
+        }
+        unload();
     }
 
     public void load(boolean skybox){

@@ -17,7 +17,7 @@ import static org.lwjgl.opengles.GLES20.GL_UNSIGNED_BYTE;
 import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
-public class SkyboxTexture {
+public class SkyboxTexture extends Texture{
     private String[] path;
     public int id;
 
@@ -30,7 +30,8 @@ public class SkyboxTexture {
         loadTexture();
     }
 
-    private void loadTexture(){
+    @Override
+    public void loadTexture(){
         id = GL20.glGenTextures();
         GL20.glBindTexture(GL_TEXTURE_CUBE_MAP, id);
 
@@ -56,10 +57,12 @@ public class SkyboxTexture {
         }
     }
 
+    @Override
     public void load(){
         GL20.glBindTexture(GL_TEXTURE_CUBE_MAP, id);
     }
 
+    @Override
     public void unload(){
         GL20.glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
     }
