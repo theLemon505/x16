@@ -1,7 +1,9 @@
 package io;
 
+import ecs.entities.EditorCamera;
 import ecs.scenes.Scene;
 import ecs.scenes.TestScene;
+import gui.EditorGui;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -16,10 +18,12 @@ import static org.lwjgl.opengl.GL13.GL_MULTISAMPLE;
 import static org.lwjgl.system.MemoryStack.stackPush;
 
 public class Display {
+    private EditorGui gui = new EditorGui();
     public static int width, height, aspect, aspectWidth, aspectHeight;
     public String title, version;
     public long window;
     public Scene currentScene = new TestScene();
+    public boolean editor = true;
 
     public Display(int width, int height, String title, String version){
         Display.width = width;
@@ -109,18 +113,24 @@ public class Display {
 
         Display.WindowResizeCallback(window, Display.width, Display.height);
 
+        if(editor){
+            gui.init();
+        }
+
         currentScene.init();
         System.out.println("OpenGL version " + glGetString(GL_VERSION));
         while(!glfwWindowShouldClose(window)){
             glfwPollEvents();
 
             currentScene.loop();
+            gui.loop();
 
             Input.endFrame();
             glfwSwapBuffers(window);
         }
 
         end();
+        gui.end();
     }
 
     private void end(){
