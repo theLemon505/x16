@@ -7,6 +7,7 @@ public class EditorGui{
     private List<Window> windows = new ArrayList<Window>();
 
     public void init(){
+        windows.add(new Window("test", 25, 25));
         for(Window window : windows){
             window.init();
         }

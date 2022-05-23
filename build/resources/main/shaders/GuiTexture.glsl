@@ -15,16 +15,16 @@ void main() {
     gl_Position = world_position;
 }
 
-#fragment
+    #fragment
 
-#version 330 core
+    #version 330 core
 
 in vec2 uv;
 
-uniform vec3 element_color;
+uniform sampler2D texture_sampler;
 
 out vec4 out_color;
 
 void main() {
-    out_color = vec4(element_color, 1);
+    out_color = texture(texture_sampler, uv);
 }

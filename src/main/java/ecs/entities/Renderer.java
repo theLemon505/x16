@@ -14,7 +14,7 @@ public class Renderer extends Entity{
 
     private PassVao vao;
 
-    private Fbo framebuffer = new Fbo();
+    public static Fbo framebuffer = new Fbo();
 
     public Renderer(){
         super("renderer");
